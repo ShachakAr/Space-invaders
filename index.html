@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Space invaders</title>
+</head>
+
+
+<body onkeyup="onKeyDown(event)" onload="onInitGame()">
+
+    <header>
+        <div class="title-box">
+            <h1>Space invaders</h1>
+        </div>
+        <br>
+    </header>
+
+    <div class="game-options">
+        <div class="settings">Game settings:
+            <br>
+            <button class="button-start" onclick="onBtnStart()" role="button">Start the invasion!</button>
+            <button> Last level</button>
+            <button> Next level</button>
+        </div>
+    </div>
+
+    <div class="bonus">
+        <div class="lives">lives: <span>💚💚💚</span></div>
+        <div class="rapid-fire">Rapid fire: <span>💨💨💨</span></div>
+        <div class="shild">Shild: <span>🕋🕋🕋</span></div>
+    </div>
+
+    <div class="instructions">
+        <div class="content">
+            <div class="game-end"></div>
+            <span>Press 'n' to explode your missile mid-air</span>
+            <br>
+            <span>Press 'x' to lunch a fast laser</span>
+            <br>
+            <span>Hit the candy to freeze the invaders, and get rapid fire</span>
+            <br>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table border="1" cellpadding="10">
+            <th class="game-info-panel" colspan="100%">
+                <span class="counter-box"></span>
+                <span class="timer">🕓</span>
+            </th>
+            <tbody class="board"></tbody>
+        </table>
+    </div>
+
+
+    <script src="js/util.js"></script>
+    <script src="js/hero.js"></script>
+    <script src="js/alien.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>
