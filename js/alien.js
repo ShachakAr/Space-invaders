@@ -1,8 +1,9 @@
 'use strict'
 
-const ALIEN_SPEED = 2000
-const ALIEN_ATTACK_SPEED = 1000
-var gAliensInterval;
+const ALIEN_SPEED = 500
+const ALIEN_ATTACK_SPEED = 350
+// movement intervals
+var gAliensMoveInterval;
 var gAliensAttackInterval;
 const gAliensAttacks = []
 
@@ -77,7 +78,7 @@ function shiftBoardRight(board, fromI, toI) {
             pos.j++
             updateCell(pos, ALIEN)
             if (i === toI) {
-                if (Math.random() <= 0.1) alienAttack(pos)
+                if (Math.random() <= 0.05) alienAttack(pos)
             } 
         }
     }
@@ -96,7 +97,7 @@ function shiftBoardLeft(board, fromI, toI) {
             pos.j--
             updateCell(pos, ALIEN)
             if (i === toI) {
-                if (Math.random() <= 0.1) alienAttack(pos)
+                if (Math.random() <= 0.05) alienAttack(pos)
             } 
         }
     }
@@ -132,7 +133,7 @@ function shiftBoardDown(board, fromI, toI) {
 
 
 function alienAttack (pos){
-    console.log('Alien attack')
+    // console.log('Alien attack')
     // Show rock
     pos.i++
     updateCell(pos, ROCK)

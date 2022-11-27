@@ -75,9 +75,9 @@ function shoot() {
     gLaserPositions.push(laserNextPos)
 
     // if there is no active interval
-    if (!gGame.isInterval) {
+    if (!gGame.isLaserInterval) {
         const laserSpeed = gHero.isRapid ? LASER_SPEED * 1.5 : LASER_SPEED
-        gGame.isInterval = true
+        gGame.isLaserInterval = true
         gBlinkLaserInterval = setInterval(() => {
             for (var i = 0; i < gLaserPositions.length; i++) {
 
@@ -85,7 +85,7 @@ function shoot() {
                     gLaserPositions.splice(0, 1)
                     if (gLaserPositions.length === 0) {
                         clearInterval(gBlinkLaserInterval)
-                        gGame.isInterval = false
+                        gGame.isLaserInterval = false
                         return
                     } else {
                         i--
@@ -107,7 +107,7 @@ function shoot() {
 function handleHeroHit() {
     console.log('hero hit')
     if (gHero.isShild) return
-    if (gGame.livesCount < 1) return gameEnding('lose')
+    
     gGame.livesCount--
     var livesStr = ''
     for (var i = 0; i < gGame.livesCount; i++) {
@@ -115,6 +115,23 @@ function handleHeroHit() {
     }
     const elLivesSpan = document.querySelector('.lives span')
     elLivesSpan.innerHTML = livesStr
+    if (gGame.livesCount === 0)  gameEnding('lose')
+}
+
+function shild(){
+    console.log('shild on')
+    if (gGame.shildsCount === 0) return
+    var shildsStr =''
+    gGame.shildsCount--
+    for (var i = 0; i < gGame.shildsCount; i++){
+        shildsStr += '🕋'
+    }
+    const elShildsSpan = document.querySelector('.shild span')
+    elShildsSpan.innerHTML = shildsStr
+    gHero.isShild = true
+    setTimeout(() => {
+       gHero.isShild = false
+    }, 3000);
 }
 
 function rapidFire() {
@@ -139,7 +156,7 @@ function explodeProjectile() {
     if (!gHero.isShoot || gHero.isRapid) return
     // stop laser movment
     clearInterval(gBlinkLaserInterval)
-    gGame.isInterval = false
+    gGame.isLaserInterval = false
     // Run loop to find negs
     explodeAlienNegs(gLaserPositions[0].i, gLaserPositions[0].j, gBoard)
     // Clear laserpos array
