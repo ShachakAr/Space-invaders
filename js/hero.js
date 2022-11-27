@@ -39,6 +39,10 @@ function onKeyDown(event) {
             break
         case 'x':
             rapidFire()
+            break
+        case 'z':
+            shild()
+            break
 
     }
 }
@@ -76,7 +80,7 @@ function shoot() {
         gGame.isInterval = true
         gBlinkLaserInterval = setInterval(() => {
             for (var i = 0; i < gLaserPositions.length; i++) {
-                
+
                 if (gLaserPositions[0] === null) {
                     gLaserPositions.splice(0, 1)
                     if (gLaserPositions.length === 0) {
@@ -88,24 +92,25 @@ function shoot() {
                         continue
                     }
                 }
-    
+
                 blinkLaser(gLaserPositions[i], i)
                 if (gLaserPositions[i] !== null) gLaserPositions[i].i--
             }
         }, laserSpeed)
 
-    } 
-    else{console.log('there is an interval runing')}
+    }
+    else { console.log('there is an interval runing') }
 
 }
 
-// TODO: finish shild check
-function handleHeroHit(){
+// Update livesCount / gameOver
+function handleHeroHit() {
     console.log('hero hit')
-    if (gGame.livesCount < 1) return
+    if (gHero.isShild) return
+    if (gGame.livesCount < 1) return gameEnding('lose')
     gGame.livesCount--
     var livesStr = ''
-    for (var i = 0; i < gGame.livesCount; i++){
+    for (var i = 0; i < gGame.livesCount; i++) {
         livesStr += '💚'
     }
     const elLivesSpan = document.querySelector('.lives span')
@@ -116,7 +121,7 @@ function rapidFire() {
     if (gGame.rapidFireCount < 1) return
     gGame.rapidFireCount--
     var rapidFireStr = ''
-    for (var i = 0; i < gGame.rapidFireCount; i++){
+    for (var i = 0; i < gGame.rapidFireCount; i++) {
         rapidFireStr += '💨'
     }
     const elRapidFireSpan = document.querySelector('.rapid-fire span')
@@ -156,7 +161,7 @@ function explodeAlienNegs(cellI, cellJ, board) {
 
 // renders a LASER at specific cell for short time and removes it
 function blinkLaser(nextPos, idx) {
-    const laserImg = (gHero.isRapid) ? LASER_X : LASER 
+    const laserImg = (gHero.isRapid) ? LASER_X : LASER
 
     // Hitting the end of the board
     if (nextPos.i < 0) {
@@ -199,7 +204,7 @@ function blinkLaser(nextPos, idx) {
         handleAlienHit(nextPos)
         // Remove laser from the positions array
         gLaserPositions.splice(idx, 1, null)
-        
+
         return
 
     } else if (nextCell.gameObject === BUNKER) {
@@ -208,7 +213,7 @@ function blinkLaser(nextPos, idx) {
 
         // Remove laser from the positions array
         gLaserPositions.splice(idx, 1, null)
-        
+
         return
     } else if (nextCell.gameObject === ROCK) {
         gHero.isShoot = false
@@ -218,8 +223,8 @@ function blinkLaser(nextPos, idx) {
         updateCell(nextPos, null)
         // Remove rock from array
         const rockIdx = gAliensAttacks.findIndex(object => {
-           return (object.i === nextPos.i && object.j === nextPos.j)
-        
+            return (object.i === nextPos.i && object.j === nextPos.j)
+
         })
         gAliensAttacks.splice(rockIdx, 1, null)
         // Remove laser from the positions array

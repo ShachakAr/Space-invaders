@@ -204,7 +204,7 @@ function updateCell(pos, gameObject = null) {
         elCell.innerHTML = heroImg
         return
     } else if (gameObject === ALIEN){
-        elCell.innerHTML = ALIEN_IMG || '';
+        elCell.innerHTML = ALIEN_IMG
         return
     }
     elCell.innerHTML = gameObject || '';
